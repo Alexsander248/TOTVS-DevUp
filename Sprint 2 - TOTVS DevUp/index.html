@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprint 2 - TOTVS DevUp</title>
+</head>
+
+<body>
+    <script>
+        var idade = 0;
+
+        while (idade < 18) {
+            var nome = prompt("Qual é o seu nome?");
+            var desejaApelido = prompt('Você deseja ser chamado igual ao seu nome? Digite S ou N');
+
+            if (desejaApelido === 'N' || desejaApelido === 'n') {
+                nome = prompt('Digite o nome pelo qual deseja ser chamado(a)');
+            }
+
+            alert(`Olá, ${nome}!`);
+
+            idade = parseInt(prompt("Qual é a sua idade?"));
+
+            var idadeMinima = 18;
+            var anosFaltantes = idadeMinima - idade;
+
+            if (idade < idadeMinima) {
+                alert(`Faltam ${anosFaltantes} anos para idade mínima`);
+            } else {
+                alert(`Tudo certo ${nome}! Daremos continuidade com a abertura de conta`);
+
+                const valorInvestido = parseFloat(prompt('Digite o valor que deseja investir:'));
+                const periodoInvestimento = parseInt(prompt('Por quantos meses deseja deixar o dinheiro investido?'));
+                var porcentagemInvestimento = 0;
+
+                if (valorInvestido >= 1 && valorInvestido < 100) {
+                    porcentagemInvestimento = 0.012;
+                    alert('Você pode investir no Start com rendimento de 1,2% ao mês. Podendo retirar a qualquer momento.');
+                } else if (valorInvestido >= 100 && valorInvestido < 500) {
+                    porcentagemInvestimento = 0.0178;
+                    alert('Você pode investir no Plus com rendimento de 1,78% ao mês. Podendo retirar após 30 dias.');
+                } else if (valorInvestido >= 500) {
+                    if (periodoInvestimento >= 6 && periodoInvestimento < 12) {
+                        porcentagemInvestimento = 0.026;
+                        alert('Você pode investir no plano Pro com rendimento de 2,6% ao mês.');
+                    } else if (periodoInvestimento >= 12) {
+                        porcentagemInvestimento = 0.044;
+                        alert('Você pode investir no plano Pro com rendimento de 4,4% ao mês.');
+                    } else {
+                        alert('Período de investimento no plano Pro inválido. Mínimo é 6 meses.');
+                    }
+                } else {
+                    alert('Valor de investimento insuficiente.');
+                }
+
+                if (porcentagemInvestimento !== 0) {
+                    var valorFinalInvestimento = (valorInvestido * porcentagemInvestimento) * periodoInvestimento;
+                    var valorTotal = valorInvestido + valorFinalInvestimento;
+                    alert(`O valor final do seu investimento será de R$${valorFinalInvestimento.toFixed(2)}. O valor total do seu investimento será de R$${valorTotal.toFixed(2)}.`);
+                }
+            }
+        }
+
+    </script>
+
+
+
+</body>
+
+</html>
