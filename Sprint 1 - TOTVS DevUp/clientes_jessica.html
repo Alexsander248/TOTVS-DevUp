@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        // Dados das cidades
+        const clientesPorCidade = {
+            "Belo Horizonte": 23,
+            "São Paulo": 12,
+            "Salvador": 11,
+            "Campo Grande": 10,
+            "Curitiba": 8
+        };
+
+        // Dados de faturamento
+        const faturamentoPorCidade = {
+            "Belo Horizonte": 2950,
+            "São Paulo": 3950,
+            "Salvador": 1329,
+            "Campo Grande": 2412,
+            "Curitiba": 626
+        };
+        // 1. Somar a quantidade de clientes
+        let totalClientes = 0;
+        for (const cidade in clientesPorCidade) {
+            totalClientes += clientesPorCidade[cidade];
+        }
+        // 2. Calcular a média de faturamento por cliente
+        const mediaFaturamentoPorCliente = {};
+        for (const cidade in faturamentoPorCidade) {
+            const faturamento = faturamentoPorCidade[cidade];
+            const clientes = clientesPorCidade[cidade];
+            const media = faturamento / clientes;
+            mediaFaturamentoPorCliente[cidade] = media;
+        }
+
+        // 3. Calcular a média de faturamento por cliente nas cinco cidades
+        let totalFaturamento = 0;
+        for (const cidade in faturamentoPorCidade) {
+            totalFaturamento += faturamentoPorCidade[cidade];
+        }
+        const mediaFaturamentoTotal = totalFaturamento / totalClientes;
+
+        // 4. Calcular o lucro por cidade
+        for (const cidade in faturamentoPorCidade) {
+            const faturamento = faturamentoPorCidade[cidade];
+            const clientes = clientesPorCidade[cidade];
+            let custoProducao = (faturamento * 0.2) / clientes;
+            let custoFrete = cidade === "São Paulo" ? 9 : 14;
+            let lucro = faturamento / clientes - custoProducao - custoFrete;
+            console.log(`Lucro em ${cidade}: R$ ${lucro.toFixed(2)}`);
+        }
+
+        // Exibir os resultados na página
+        document.write(`<p>Nas capitais de BH, SP, BA, MS e PR, Jéssica possui ${totalClientes} clientes.</p>`);
+        document.write("<p>Faturamento médio por cliente:</p>");
+        for (const cidade in mediaFaturamentoPorCliente) {
+            document.write(`<p>${cidade}: R$ ${Math.round(mediaFaturamentoPorCliente[cidade])}</p>`);
+        }
+        document.write(`<p>Faturamento médio por cliente nas cinco cidades onde Jéssica mais tem clientes ativos é de R$ ${Math.round(mediaFaturamentoTotal)}</p>`);
+    </script>
+
+</body>
+
+</html>

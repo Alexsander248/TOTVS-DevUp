@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // Variáveis para as fórmulas de área
+        const areaRetangulo = (comprimento, largura) => comprimento * largura;
+        const areaCirculo = raio => Math.PI * raio * raio;
+        const areaTriangulo = (base, altura) => (base * altura) / 2;
+
+        // Valores das medidas
+        var comprimentoRetangulo = 8;
+        var larguraRetangulo = 6;
+
+        var raioCirculo = 5;
+
+        var baseTriangulo = 4;
+        var alturaTriangulo = 3;
+
+        // Cálculos das áreas
+        const areaDoRetangulo = areaRetangulo(comprimentoRetangulo, larguraRetangulo);
+        const areaDoCirculo = areaCirculo(raioCirculo);
+        const areaDoTriangulo = areaTriangulo(baseTriangulo, alturaTriangulo);
+
+        // Exibindo os resultados
+        console.log(`A área do retângulo é: ${areaDoRetangulo}`);
+        console.log(`A área do círculo é: ${areaDoCirculo}`);
+        console.log(`A área do triângulo retângulo é: ${areaDoTriangulo}`);
+
+
+    </script>
+
+</body>
+
+</html>

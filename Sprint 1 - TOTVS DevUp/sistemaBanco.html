@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // Variável para contar o número de tentativas de senha incorretas
+        let tentativasIncorretas = 0;
+        // Variável para armazenar a chave de segurança
+        const chaveSeguranca = "9999";
+
+        // Função para bloquear o cartão
+        function bloquearCartao() {
+            alert("Senha incorreta. Seu cartão foi bloqueado.");
+            const opcao = prompt("Se deseja ir a uma agência, digite 'A', se deseja desbloquear com sua chave de segurança, digite 'D':");
+
+            if (opcao === "A") {
+                alert("Será um prazer atendê-la em uma agência.");
+            } else if (opcao === "D") {
+                desbloquearComChaveSeguranca();
+            } else {
+                alert("Opção inválida. Por favor, escolha 'A' ou 'D'.");
+            }
+        }
+
+        // Função para desbloquear com a chave de segurança
+        function desbloquearComChaveSeguranca() {
+            const chaveDigitada = prompt("Digite a chave de segurança que foi enviada para seu e-mail cadastrado:");
+
+            if (chaveDigitada === chaveSeguranca) {
+                alert("Chave correta. Por favor, redefina sua senha.");
+                // Aqui você pode adicionar a lógica para permitir que o usuário redefina a senha
+            } else {
+                alert("Chave incorreta. Você deve ir a uma agência.");
+            }
+        }
+
+        // Lógica principal
+        while (tentativasIncorretas < 3) {
+            const senhaDigitada = prompt("Digite sua senha:");
+
+            // Suponhamos que a senha correta seja "1234". Você deve substituir pela senha real do usuário.
+            if (senhaDigitada === "1234") {
+                alert("Senha correta. Você pode continuar suas compras.");
+                break; // A senha está correta, saímos do loop.
+            } else {
+                tentativasIncorretas++;
+
+                if (tentativasIncorretas < 3) {
+                    alert(`Senha incorreta. Você tem ${3 - tentativasIncorretas} tentativas restantes.`);
+                } else {
+                    bloquearCartao();
+                }
+            }
+        }
+
+    </script>
+</body>
+
+</html>
