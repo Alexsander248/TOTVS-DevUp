@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -15,9 +15,10 @@
             var nome = prompt("Qual é o seu nome?");
             var desejaApelido = prompt('Você deseja ser chamado igual ao seu nome? Digite S ou N');
 
-            if (desejaApelido === 'N' || desejaApelido === 'n') {
+            if (desejaApelido.toLowerCase() === 'n') {
                 nome = prompt('Digite o nome pelo qual deseja ser chamado(a)');
             }
+
 
             alert(`Olá, ${nome}!`);
 
