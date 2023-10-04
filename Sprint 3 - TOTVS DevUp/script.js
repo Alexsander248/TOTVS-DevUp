@@ -9,6 +9,19 @@ function coletaDados() {
   const profissao = coletaProfissao();
   const salario = coletaSalario();
   const senha = coletaSenha();
+
+  const CLIENTE = {
+    dataNasc: dataNasc,
+    cpf: cpf,
+    nomeCliente: nomeCliente,
+    email: email,
+    numerosContato: numerosContato,
+    endereco: endereco,
+    cidade: cidade,
+    profissao: profissao,
+    salario: salario,
+    senha: senha,
+  };
 }
 
 coletaDados();
@@ -25,6 +38,18 @@ function coletaCPF() {
   return cpf;
 }
 
+function verificarCPF(cpf) {
+  const cpfLimpo = cpf.split(/[.-]/).join("");
+  if (cpfLimpo.length === 11) {
+    alert("Tudo certo! Vamos prosseguir.");
+  } else {
+    alert(
+      "Verificamos aqui e seu CPF parece ser um número inválido. Tente novamente."
+    );
+    coletaCPF();
+  }
+}
+
 function coletaNomeCliente() {
   const nomeCliente = prompt("Digite o seu nome completo:");
 
@@ -35,6 +60,14 @@ function coletaEmail() {
   const email = prompt("Agora nos diga qual é o seu melhor email:");
 
   return email;
+}
+
+function verificarEmail(email) {
+  const emailValido = email.indexOf("@");
+  if (emailValido === -1) {
+    alert("Ops! Tem certeza que esse e-mail está correto? Tente novamente.");
+    coletaEmail();
+  }
 }
 
 function coletaNumeroContato() {
