@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // Função para validar a data de nascimento (DD/MM/AAAA)
+      function validarDataNascimento(dataNascimento) {
+        const regexData = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+        if (!regexData.test(dataNascimento)) {
+          alert("Data de nascimento inválida! Tente novamente.");
+          return false;
+        }
+        const [_, dia, mes, ano] = dataNascimento.match(regexData);
+        const dataAtual = new Date();
+        const dataNasc = new Date(ano, mes - 1, dia);
+        const idadeEmAnos = dataAtual.getFullYear() - dataNasc.getFullYear();
+        if (
+          dataAtual.getMonth() < dataNasc.getMonth() ||
+          (dataAtual.getMonth() === dataNasc.getMonth() &&
+            dataAtual.getDate() < dataNasc.getDate())
+        ) {
+          idadeEmAnos--;
+        }
+        if (idadeEmAnos >= 18) {
+          return true;
+        } else {
+          const anosRestantes = 18 - idadeEmAnos;
+          alert(
+            `Ops! Você ainda não tem a idade mínima para abrir uma conta conosco. Daqui ${anosRestantes} anos você poderá tentar novamente.`
+          );
+          return false;
+        }
+      }
+
+      // Função para validar a senha (não repetir números nem sequência)
+      function validarSenha(senha) {
+        if (!/^\d{4}$/.test(senha)) {
+          alert(
+            "Senha inválida! A senha deve conter 4 números. Tente novamente."
+          );
+          return false;
+        }
+        const numeros = senha.split("").map(Number);
+        if (
+          numeros[0] === numeros[1] ||
+          numeros[1] === numeros[2] ||
+          numeros[2] === numeros[3]
+        ) {
+          alert(
+            "Senha inválida! Os números não podem se repetir. Tente novamente."
+          );
+          return false;
+        }
+        if (
+          numeros[0] === numeros[1] - 1 &&
+          numeros[1] === numeros[2] - 1 &&
+          numeros[2] === numeros[3] - 1
+        ) {
+          alert(
+            "Senha inválida! Os números não podem formar uma sequência. Tente novamente."
+          );
+          return false;
+        }
+        return true;
+      }
+
+      // Função para validar CPF
+      function validarCPF(cpf) {
+        if (!cpf || typeof cpf !== "string") {
+          return false;
+        }
+
+        // Remover caracteres não numéricos
+        cpf = cpf.replace(/[^\d]/g, "");
+
+        if (cpf.length !== 11) {
+          return false;
+        }
+
+        // Verificar se todos os dígitos são iguais (ex. 111.111.111-11)
+        if (/^(\d)\1+$/.test(cpf)) {
+          return false;
+        }
+
+        // Calcular o primeiro dígito verificador
+        let soma = 0;
+        for (let i = 0; i < 9; i++) {
+          soma += parseInt(cpf.charAt(i)) * (10 - i);
+        }
+        let resto = 11 - (soma % 11);
+        let digitoVerificador1 = resto === 10 || resto === 11 ? 0 : resto;
+
+        if (digitoVerificador1 !== parseInt(cpf.charAt(9))) {
+          return false;
+        }
+
+        // Calcular o segundo dígito verificador
+        soma = 0;
+        for (let i = 0; i < 10; i++) {
+          soma += parseInt(cpf.charAt(i)) * (11 - i);
+        }
+        resto = 11 - (soma % 11);
+        let digitoVerificador2 = resto === 10 || resto === 11 ? 0 : resto;
+
+        if (digitoVerificador2 !== parseInt(cpf.charAt(10))) {
+          return false;
+        }
+
+        return true;
+      }
+
+      // Função para validar email
+      function validarEmail(email) {
+        if (!email || typeof email !== "string") {
+          return false;
+        }
+
+        // Usar uma expressão regular simples para verificar o formato do email
+        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regexEmail.test(email);
+      }
+
+      // Função para coletar os dados do usuário e criar o objeto cliente
+      function criarContaBancaria() {
+        const dataNascimento = prompt(
+          "Qual a sua data de nascimento? (DD/MM/AAAA)"
+        );
+        if (!validarDataNascimento(dataNascimento)) {
+          return;
+        }
+
+        const cpf = prompt("Qual o seu CPF? (xxx.xxx.xxx-xx)").replace(
+          /[^\d]/g,
+          ""
+        );
+        if (!validarCPF(cpf)) {
+          alert("CPF inválido! Tente novamente.");
+          return;
+        }
+
+        const nomeCompleto = prompt("Digite o seu nome completo:");
+        const email = prompt("Agora nos diga qual é o seu melhor email:");
+        if (!validarEmail(email)) {
+          alert("E-mail inválido! Tente novamente.");
+          return;
+        }
+
+        const celular = prompt("Digite um número de celular válido:");
+        if (!celular) {
+          alert("Número de celular é obrigatório! Tente novamente.");
+          return;
+        }
+
+        let telefone = prompt(
+          "Digite um número de telefone para contato. Caso não possua, clique em OK para prosseguir."
+        );
+
+        // Tratando telefone opcional
+        if (!telefone) {
+          telefone = "Telefone: não informado";
+        }
+
+        const endereco = prompt(
+          "Qual o seu endereço? (R. das Flores, 195, Bairro Tristeza)"
+        );
+        const cidadeEstado = prompt(
+          "Qual cidade e estado você mora? (Porto Alegre - RS)"
+        );
+        const profissao = prompt("Conta para nós, qual é a sua profissão:");
+
+        let salario = prompt("E qual a sua renda mensal aproximada:");
+        salario = parseFloat(salario.replace(",", ".")); // Converte para float
+
+        let senha;
+        do {
+          senha = prompt(
+            "Agora digite uma senha de 4 números (não pode repetir os números nem ser uma sequência):"
+          );
+        } while (!validarSenha(senha));
+
+        // Criando o objeto cliente com os dados coletados
+        const cliente = {
+          dataNascimento,
+          cpf,
+          nomeCompleto,
+          email,
+          celular,
+          telefone,
+          endereco,
+          cidadeEstado,
+          profissao,
+          salario,
+          senha,
+        };
+
+        // Mensagem com todos os dados tratados
+        const mensagemDadosCliente = `
+    Dados do Cliente:
+    - Data de Nascimento: ${cliente.dataNascimento}
+    - CPF: ${cliente.cpf}
+    - Nome Completo: ${cliente.nomeCompleto}
+    - E-mail: ${cliente.email}
+    - Celular: ${cliente.celular}
+    - ${cliente.telefone}
+    - Endereço: ${cliente.endereco}
+    - Cidade e Estado: ${cliente.cidadeEstado}
+    - Profissão: ${cliente.profissao}
+    - Salário: R$ ${cliente.salario.toFixed(2)}
+    - Senha: **** (senha ocultada)
+  `;
+
+        alert(`Confira seus dados:\n${mensagemDadosCliente}`);
+
+        // Oferecer cartão de crédito com base no salário
+        let limiteCartao = 0;
+        if (cliente.salario > 5000) {
+          limiteCartao = cliente.salario * 0.31;
+        } else if (cliente.salario > 3000) {
+          limiteCartao = cliente.salario * 0.28;
+        } else if (cliente.salario > 1000) {
+          limiteCartao = cliente.salario * 0.2;
+        }
+
+        alert(
+          `Oferta de Cartão de Crédito:\nVocê é elegível para um cartão de crédito com limite de R$ ${limiteCartao.toFixed(
+            2
+          )}.`
+        );
+
+        console.log("Dados do cliente:", cliente);
+      }
+
+      // Chamando a função para criar a conta bancária
+      criarContaBancaria();
+    </script>
+  </body>
+</html>
