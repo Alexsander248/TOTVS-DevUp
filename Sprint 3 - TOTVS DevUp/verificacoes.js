@@ -34,7 +34,7 @@ export function verificaDataNasc(dataNasc) {
   export function verificaSenha(senha){
     //Verifica se tem 4 caracteres
     if(senha.length !==4){
-    alert('A senha possui o tamanha invalido')
+    alert('A senha possui o tamanho invalido')
     return false
     
   }
