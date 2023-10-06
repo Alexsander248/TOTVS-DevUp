@@ -1,8 +1,11 @@
+import { verificaDataNasc, verificaEmail, verificaSenha } from "./verificacoes.js";
+
+
 function coletaDados() {
   const dataNasc = coletaDataNasc()
   const cpf = coletaCPF()
   const nomeCliente = coletaNomeCliente()
-  const email = coletaEmail() 
+  const email = coletaEmail()
   const numerosContato = coletaNumerosContato()
   const endereco = coletaEndereco()
   const cidade = coletaCidade()
@@ -16,14 +19,45 @@ function coletaDados() {
     nomeCliente: nomeCliente,
     email: email,
     numerosContato: numerosContato,
-     endereco: endereco,
+    endereco: endereco,
     cidade: cidade,
     profissao: profissao,
     salario: salario,
     senha: senha
   }
 
-  console.log(CLIENTE)
+  alert(`
+Confirme os seus dados:
+Nome completo: ${CLIENTE.nomeCliente.toUpperCase()}
+CPF: ${CLIENTE.cpf}
+Data de Nascimento: ${CLIENTE.dataNasc.dataNasc}
+Idade: ${CLIENTE.dataNasc.idade}
+
+E-mail: ${CLIENTE.email}
+Celular: ${CLIENTE.numerosContato.celular}
+Telefone: ${CLIENTE.numerosContato.telefone}
+
+Endereço: ${CLIENTE.endereco}
+Cidade/UF: ${CLIENTE.cidade}
+
+Profissao: ${CLIENTE.profissao.toUpperCase()}
+Salario: ${CLIENTE.salario}
+
+Senha Cadastrada: ${CLIENTE.senha}
+`)
+
+  let credito
+  if (CLIENTE.salario >= 1000 && CLIENTE.salario < 3000) {
+    credito = salario * .2
+
+  } else if (CLIENTE.salario >= 3000 && CLIENTE.salario < 5000) {
+    credito = salario * .28
+  } else if (CLIENTE.salario >= 5000) {
+    credito = salario * .31
+  }
+
+  alert(`Você tem direito a um crédito inicial de R$${credito}. Deseja aderir?`)
+  alert(`Bem Vindo(a)! ${CLIENTE.nomeCliente}`)
 }
 
 coletaDados()
@@ -38,49 +72,29 @@ function coletaDataNasc() {
   }
 }
 
-function verificaDataNasc(dataNasc) {
-  const particaoData = dataNasc.split('/')
-  const diaNasc = parseInt(particaoData[0])
-  const mesNasc = parseInt(particaoData[1])
-  const anoNasc = parseInt(particaoData[2])
 
-  const dataNascObj = new Date(anoNasc, mesNasc - 1, diaNasc)
-  const dataAtual = new Date()
-
-  const idadeEmMiliseg = dataAtual - dataNascObj
-                                  // 1000ms -> 1s - 60s -> 1min    --- arredondamento por causa de anos bissextos
-  const idadeEmAnos = Math.floor(idadeEmMiliseg / (1000 * 60 * 60 * 24 * 365.2425))
-
-  if(idadeEmAnos >= 18) {
-    alert('Verificamos aqui e você pode abrir a sua conta conosco!')
-  } else {
-    alert(`Ops! Você ainda não tem a idade mínima para abrir uma conta conosco. Daqui ${18 - idadeEmAnos} anos você poderá tentar novamente!`)
-  }
-
-  return idadeEmAnos
-}
 
 function coletaCPF() {
   let cpf = prompt('Qual o seu CPF? (xxx.xxx.xxx-xx)')
-  
+
   //        false
-  while(!verificaCPF(cpf)) {
+  while (!verificaCPF(cpf)) {
     cpf = prompt('Qual o seu CPF? (xxx.xxx.xxx-xx)')
   }
-   
+
   return cpf
 }
 
 function verificaCPF(cpf) {
   const cpfLimpo = cpf.split(/[.-]/).join('')
-  if(cpfLimpo.length === 11) {
+  if (cpfLimpo.length === 11) {
     alert('Tudo certo! Vamos prosseguir.')
     return true
   }
-  
+
   alert('Verificamos aqui e seu CPF parece ser um número inválido. Tente novamente.')
   return false
-  
+
 }
 
 function coletaNomeCliente() {
@@ -92,31 +106,23 @@ function coletaNomeCliente() {
 function coletaEmail() {
   let email = prompt('Agora nos diga qual é o seu melhor email:')
 
-  while(!verificaEmail(email)) {
+  while (!verificaEmail(email)) {
     email = prompt('Agora nos diga qual é o seu melhor email:')
   }
 
   return email
 }
 
-function verificaEmail(email) {
-  const emailValido = email.indexOf('@')
-  if(emailValido === -1) {
-    alert('Ops! Tem certeza que esse e-mail está correto? Tente novamente.')
-    return false
-  }
 
-  return true
-}
 
 function coletaNumerosContato() {
   let celular = prompt('Digite um número de celular válido: ') // => ''
-  while(celular === '') {
-    celular = prompt('Digite um número de celular válido: ') 
+  while (celular === '') {
+    celular = prompt('Digite um número de celular válido: ')
   }
 
   let telefone = prompt('Digite um número de telefone para contato. Caso não possua clique em OK para prosseguir.')
-  if(telefone === '') {
+  if (telefone === '') {
     telefone = 'Não informado'
   }
 
@@ -151,10 +157,20 @@ function coletaSalario() {
 }
 
 function coletaSenha() {
-  const senha = prompt('Agora digite uma senha de 4 números (não pode repetir os números nem ser uma sequência):')
+  let senha = prompt('Agora digite uma senha de 4 números (não pode repetir os números nem ser uma sequência):')
+  //     ! = falso
+  while (!verificaSenha(senha)) {
+    senha = prompt('Agora digite uma senha de 4 números (não pode repetir os números nem ser uma sequência):')
+
+  }
 
   return senha
 }
+
+
+
+
+
 
 
 
